@@ -10,9 +10,9 @@ from vnpy_portfoliostrategy.utility import PortfolioBarGenerator
 class MyBollChannelStrategy(StrategyTemplate):
     """组合布林带通道策略"""
 
-    author = "222"
+    author = "2233"
 
-    boll_window = 18
+    boll_window = 9
     boll_dev = 3.4
     cci_window = 10
     atr_window = 30
@@ -141,16 +141,24 @@ class MyBollChannelStrategy(StrategyTemplate):
 
                 if current_pos < 0:
                     self.cover(vt_symbol, price, volume)
+                    self.write_log("cover")
+                    print("cover")
                 else:
                     self.buy(vt_symbol, boll_up, volume)
+                    self.write_log("buy")
+                    print("buy")
 
             elif pos_diff < 0:
                 price = bar.close_price - self.price_add
 
                 if current_pos > 0:
                     self.sell(vt_symbol, price, volume)
+                    self.write_log("sell")
+                    print("sell")
                 else:
                     self.short(vt_symbol, boll_down, volume)
+                    self.write_log("short")
+                    print("short")
 
         # 推送界面更新
         self.put_event()
